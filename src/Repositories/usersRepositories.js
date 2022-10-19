@@ -16,6 +16,18 @@ async function getUserById(id){
     `, [id])).rows
 }
 
+async function searchUsername(username){
+    return (await connection.query(`
+    SELECT 
+        users.id,
+        users.username,
+        users."picUrl"
+    FROM users
+    WHERE users.username LIKE $1;
+    `, [username + '%'])).rows
+}
+
 export {
-    getUserById
+    getUserById,
+    searchUsername
 }
