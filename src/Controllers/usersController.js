@@ -6,6 +6,7 @@ async function getUserByIdController(req, res){
 
     try {
         const user = await getUserById(id)
+        if(!user[0]) return responseFunctions.notFoundResponse(res)
         const objUser = {
             userId: user[0].userId,
             username: user[0].username,
@@ -16,21 +17,20 @@ async function getUserByIdController(req, res){
                 postText: e.postText
             }})
         }
-        return res.status(200).send(objUser)
-    } catch (error) {
-        console.error(error)
-        return res.sendStatus(500)
-    }
+        return responseFunctions.okResponse(res, objUser);
+    } catch (error) {return responseFunctions.serverErrorResponse(res, error)}
 }
 
 async function searchUsernameController(req, res){
     const {username} = req.params
 
     try {
-        const users = await searchUsername(username)
+        const users = await searchUsername(username);
         if(!users[0]) return responseFunctions.notFoundResponse(res)
         return responseFunctions.okResponse(res, users);
-    } catch (error) {return responseFunctions.serverErrorResponse(res, error)}
+    } catch (error) {
+        return responseFunctions.serverErrorResponse(res, error)
+    }
 }
 
 export {

@@ -23,7 +23,7 @@ async function searchUsername(username){
         users.username,
         users."picUrl"
     FROM users
-    WHERE users.username LIKE $1;
+    WHERE users.username ILIKE $1;
     `, [username + '%'])).rows
 }
 
