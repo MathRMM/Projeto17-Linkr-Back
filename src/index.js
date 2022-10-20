@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 
-import loginRoutes from "./Routes/loginRoutes.js";
-import usersRoutes from "./Routes/usersRoutes.js";
+
+import loginRoutes from './Routes/loginRoutes.js'
+import usersRoutes from './Routes/usersRoutes.js'
 
 const app = express();
 app.use(express.json());

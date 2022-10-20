@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 dotenv.config();
 
-import * as response from '../controllers/helper/controllerHelpers.js';
+import * as response from '../Controllers/Helpers/controllerHelpers.js';
 
-import { getSessionByToken } from '../repositories/loginRepository.js';
+import { getSessionByToken } from '../Repositories/loginRepository.js';
 
 export async function authenticateToken(req, res, next) {
     const { authorization } = req.headers;
