@@ -1,10 +1,13 @@
-import { Router } from 'express'
+import { Router } from "express";
 
-import { getUserByIdController, searchUsernameController } from '../Controllers/usersController.js';
+import {
+  getUserByIdController,
+  searchUsernameController,
+} from "../Controllers/usersController.js";
 
-const router = Router()
+const searchUser = Router();
 
-router.get('/users/:id', getUserByIdController)
-router.get('/users/search/:username', searchUsernameController)
+searchUser.get("/users/:id", getUserByIdController);
+searchUser.get("/users/search/:username", searchUsernameController);
 
-export default router;
+export default searchUser;
