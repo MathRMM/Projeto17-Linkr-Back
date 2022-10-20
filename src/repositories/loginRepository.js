@@ -59,3 +59,18 @@ export async function upsertSessions(userId, token) {
         );
     }
 }
+
+export async function deleteSessionByUserId(userId) {
+    return connection.query(
+        `DELETE FROM public."sessions" WHERE "idUser" = $1;`,
+        [userId]
+    );
+}
+
+export async function getSessionByToken(token, userId) {
+    const { rows: session } = await connection.query(
+        `SELECT * FROM public."sessions" WHERE token = $1 AND "idUser"=$2 LIMIT 1;`,
+        [token, userId]
+    );
+    return session;
+}

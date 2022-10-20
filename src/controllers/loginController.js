@@ -4,7 +4,9 @@ import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 dotenv.config();
 
-import { getUser, getUserByEmail, insertUser, upsertSessions } from '../repositories/loginRepository.js';
+import { getUser, getUserByEmail, insertUser, upsertSessions, deleteSessionByUserId } from '../repositories/loginRepository.js';
+
+import * as response from './helper/controllerHelpers.js';
 
 export async function signUp(req, res) {
     const { validation } = res.locals;
@@ -13,7 +15,7 @@ export async function signUp(req, res) {
         const { rows: user } = await getUser(validation.value.email, validation.value.username);
         if (user.length !== 0) {
             const message = user[0].username === validation.value.username ? 'Username not available' : 'Invalid email';
-            res.status(409).send({
+            response.badRequestResponse(res, {
                 message
             });
             return;
@@ -21,11 +23,10 @@ export async function signUp(req, res) {
 
         await insertUser(validation.value);
 
-        res.sendStatus(201);
+        response.createdResponse(res);
         return;
     } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
+        serverErrorResponse(res, error)
         return;
     }
 }
@@ -37,9 +38,9 @@ export async function signIn(req, res) {
         // TODO - fazer o input ser username ou email
         const { rows: user } = await getUserByEmail(validation.value.email);
         if (user.length === 0 || !bcrypt.compareSync(validation.value.password, user[0].password)) {
-            res.status(401).send({
+            response.badRequestResponse(res, {
                 message: 'Email or password invalid'
-            });
+            })
             return;
         }
 
@@ -54,13 +55,12 @@ export async function signIn(req, res) {
         }
 
         await upsertSessions(user[0].id, userToken);
-        res.status(201).send({
+        response.okResponse(res, {
             token: userToken
-        });
+        })
         return;
     } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
+        response.serverErrorResponse(res, error)
         return;
     }
 }
@@ -70,10 +70,23 @@ export async function test(req, res) {
     try { // fazer verificação para o token com try >> caso de o erro p ter expirado redirecionar para o login no front (talvez usar um status diferente) >> 440 Login Time-out
         const token = req.headers.authorization;
         const retornoToken = jwt.verify(token, process.env.SECRET_TOKEN);
-        res.status(201).send(retornoToken);
+        res.status(200).send(retornoToken);
     } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
+        response.serverErrorResponse(res, error)
+        return;
+    }
+}
+
+export async function logOut(req, res) {
+    const { userId } = res.locals;
+
+    try {
+        await deleteSessionByUserId(userId);
+
+        response.okResponse(res);
+        return;
+    } catch (error) {
+        response.serverErrorResponse(res, error)
         return;
     }
 }
