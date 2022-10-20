@@ -4,9 +4,9 @@ import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 dotenv.config();
 
-import { getUser, getUserByEmail, insertUser, upsertSessions, deleteSessionByUserId } from '../repositories/loginRepository.js';
+import { getUser, getUserByEmail, insertUser, upsertSessions, deleteSessionByUserId } from '../Repositories/loginRepository.js';
 
-import * as response from './helper/controllerHelpers.js';
+import * as response from './Helpers/controllerHelpers.js';
 
 export async function signUp(req, res) {
     const { validation } = res.locals;

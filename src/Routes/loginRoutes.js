@@ -1,11 +1,11 @@
 import express from "express";
 
-import * as loginController from '../controllers/loginController.js'
+import * as loginController from '../Controllers/loginController.js'
 
-import Validation from "../middleware/validationMiddleware.js";
-import { authenticateToken } from "../middleware/authenticationMiddleware.js"
+import Validation from "../Middleware/validationMiddleware.js";
+import { authenticateToken } from "../Middleware/authenticationMiddleware.js"
 
-import { accountSchema, loginSchema } from "../middleware/helpers/joiSchemas.js";
+import { accountSchema, loginSchema } from "../Middleware/Helpers/joiSchemas.js";
 
 const loginRouter = express.Router();
 
