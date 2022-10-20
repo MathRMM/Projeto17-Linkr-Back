@@ -1,5 +1,5 @@
 import { getUserById, searchUsername } from '../Repositories/usersRepositories.js'
-import * as responseFunctions from './helper/controllerHelpers.js'
+import * as responseFunctions from './Helpers/controllerHelpers.js'
 
 async function getUserByIdController(req, res){
     const {id} = req.params
