@@ -1,4 +1,4 @@
-import { connection } from '../database/db.js';
+import { connection } from '../DB/db.js';
 import bcrypt from 'bcrypt';
 
 

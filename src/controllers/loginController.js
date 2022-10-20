@@ -26,7 +26,7 @@ export async function signUp(req, res) {
         response.createdResponse(res);
         return;
     } catch (error) {
-        serverErrorResponse(res, error)
+        response.serverErrorResponse(res, error)
         return;
     }
 }
