@@ -2,6 +2,8 @@ import { postRepository } from "../Repositories/postRepository.js";
 import urlMetadata from "url-metadata";
 
 export async function creatPost(req, res) {
+  console.log("teste");
+
   const { url, comment } = req.body;
 
   const { id } = res.locals;
