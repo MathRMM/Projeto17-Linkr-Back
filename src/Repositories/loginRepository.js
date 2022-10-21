@@ -74,3 +74,11 @@ export async function getSessionByToken(token, userId) {
     );
     return session;
 }
+
+export async function getUserProfile(userId) {
+    const { rows: user } = await connection.query(
+        `SELECT username, "picUrl" FROM public."users" WHERE id=$1 LIMIT 1;`,
+        [userId]
+    );
+    return user;
+}

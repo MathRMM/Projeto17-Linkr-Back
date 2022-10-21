@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 dotenv.config();
 
-import { getUser, getUserByEmail, insertUser, upsertSessions, deleteSessionByUserId } from '../Repositories/loginRepository.js';
+import { getUser, getUserByEmail, insertUser, upsertSessions, deleteSessionByUserId, getUserProfile } from '../Repositories/loginRepository.js';
 
 import * as response from './Helpers/controllerHelpers.js';
 
@@ -14,7 +14,7 @@ export async function signUp(req, res) {
     try {
         const { rows: user } = await getUser(validation.value.email, validation.value.username);
         if (user.length !== 0) {
-            const message = user[0].username === validation.value.username ? 'Username not available' : 'Invalid email';
+            const message = user[0].username === validation.value.username ? 'Username not available.' : 'Email not available.';
             response.badRequestResponse(res, {
                 message
             });
@@ -56,7 +56,9 @@ export async function signIn(req, res) {
 
         await upsertSessions(user[0].id, userToken);
         response.okResponse(res, {
-            token: userToken
+            username: user[0].username,
+            image: user[0].picUrl,
+            token: userToken,
         })
         return;
     } catch (error) {
@@ -71,6 +73,21 @@ export async function test(req, res) {
         const token = req.headers.authorization;
         const retornoToken = jwt.verify(token, process.env.SECRET_TOKEN);
         res.status(200).send(retornoToken);
+    } catch (error) {
+        response.serverErrorResponse(res, error)
+        return;
+    }
+}
+
+export async function returnUserProfile(req, res) {
+    const { userId } = res.locals;
+
+    try {
+        response.okResponse(res, {
+            username: user[0].username,
+            image: user[0].picUrl
+        })
+        return;
     } catch (error) {
         response.serverErrorResponse(res, error)
         return;
