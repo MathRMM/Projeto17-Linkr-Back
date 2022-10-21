@@ -1,15 +1,17 @@
-import pg from 'pg'
-import dotenv from 'dotenv'
-dotenv.config()
+import pg from "pg";
+import dotenv from "dotenv";
+import path from "path";
 
-const dataConfig={
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    database: process.env.DATABASE,
-}
+dotenv.config({ path: path.resolve("./.env") });
 
-const connection = new pg.Pool(dataConfig)
+const dataConfig = {
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DATABASE,
+};
 
-export {connection};
+const connection = new pg.Pool(dataConfig);
+
+export { connection };

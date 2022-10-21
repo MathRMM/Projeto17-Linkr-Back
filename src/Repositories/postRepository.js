@@ -1,4 +1,4 @@
-import { connection } from "../DB/db";
+import { connection } from "../DB/db.js";
 
 async function newPost(id, postText, link, metaDados) {
   return connection.query(

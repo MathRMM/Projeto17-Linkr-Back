@@ -1,6 +1,7 @@
-import { postRepository } from "../repository/postRepository.js";
+import { postRepository } from "../Repositories/postRepository.js";
+import urlMetadata from "url-metadata";
 
-export async function post(req, res) {
+export async function creatPost(req, res) {
   const { url, comment } = req.body;
 
   const { id } = res.locals;
