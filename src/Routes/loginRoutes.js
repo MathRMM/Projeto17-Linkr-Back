@@ -19,9 +19,10 @@ loginRouter.post('/signin',
     loginController.signIn
 );
 
+loginRouter.use(authenticateToken)
+
 // rota de logout
 loginRouter.get('/logout',
-    authenticateToken,
     loginController.logOut
 );
 
