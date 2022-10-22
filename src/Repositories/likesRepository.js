@@ -3,8 +3,8 @@ import { connection } from "../DB/db.js";
 async function getLikes (postId){
     return (await connection.query(`
     SELECT 
-        posts.id,
-        (SELECT COUNT(likes."idPostLiked") FROM likes WHERE likes."idPostLiked" = posts.id),
+        posts.id AS "postId",
+        (SELECT COUNT(likes."idPostLiked") FROM likes WHERE likes."idPostLiked" = posts.id) AS "countLikes",
         users.username,
         users.id AS "userId"
     FROM likes
@@ -14,16 +14,20 @@ async function getLikes (postId){
     `, [postId])).rows
 }
 
-async function delsertLikes(userId, postId){
-    const result = (await connection.query(`
+async function getUserLike(userId, postId){
+    return (await connection.query(`
     SELECT 
-        "idUser",
+        "idUser" AS "userId",
         "idPostLiked"
     FROM likes
     WHERE "idUser" = $1 AND "idPostLiked" = $2;
-    `), [userId, postId]).rowCount
+    `, [userId, postId])).rows
+}
 
-    if(result > 0){
+async function delsertLikes(userId, postId){
+    const result = await getUserLike(userId, postId)
+
+    if(result[0]){
         return connection.query(`
         DELETE FROM likes WHERE "idUser" = $1 AND "idPostLiked" = $2;
         `, [userId, postId])
@@ -37,5 +41,6 @@ async function delsertLikes(userId, postId){
 
 export {
     getLikes,
+    getUserLike,
     delsertLikes
 }

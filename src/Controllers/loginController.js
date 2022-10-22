@@ -62,7 +62,7 @@ export async function signIn(req, res) {
         const userToken = jwt.sign(
             { userId: user[0].id },
             process.env.SECRET_TOKEN,
-            { expiresIn: "10min" }
+            { expiresIn: "7d" }
         );
         if (!userToken) {
             res.sendStatus(500);
