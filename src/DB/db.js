@@ -2,7 +2,7 @@ import pg from 'pg'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const dataConfig={
+/* const dataConfig={
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
@@ -11,5 +11,8 @@ const dataConfig={
 }
 
 const connection = new pg.Pool(dataConfig)
+ */
+
+const connection = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 export {connection};

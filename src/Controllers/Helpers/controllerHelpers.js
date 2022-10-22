@@ -1,7 +1,9 @@
 const STATUS_CODE = Object.freeze({
     OK: 200,
     CREATED: 201,
+    NO_CONTENT: 204,
     BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
     NOT_FOUND: 404,
     TIMEOUT_ERROR: 403,
     SERVER_ERROR: 500
@@ -23,6 +25,14 @@ function createdResponse(res, text = STATUS_TEXT.CREATED) {
     return res.status(STATUS_CODE.CREATED).send(text);
 }
 
+function noContentResponse(res) {
+    return res.sendStatus(STATUS_CODE.NO_CONTENT);
+}
+
+function unauthorized(res) {
+    return res.sendStatus(STATUS_CODE.UNAUTHORIZED);
+}
+
 function badRequestResponse(res, text = STATUS_TEXT.BAD_REQUEST) {
     return res.status(STATUS_CODE.BAD_REQUEST).send(text);
 }
@@ -40,7 +50,9 @@ function serverErrorResponse(res, error) {
 export {
     okResponse,
     createdResponse,
+    noContentResponse,
     badRequestResponse,
+    unauthorized,
     notFoundResponse,
     serverErrorResponse
 }
