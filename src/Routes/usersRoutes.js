@@ -5,9 +5,9 @@ import {
   searchUsernameController,
 } from "../Controllers/usersController.js";
 
-const searchUser = Router();
+const usersRoutes = Router();
 
-searchUser.get("/users/:id", getUserByIdController);
-searchUser.get("/users/search/:username", searchUsernameController);
+usersRoutes.get("/users/:id", getUserByIdController);
+usersRoutes.get("/users/search/:username", searchUsernameController);
 
-export default searchUser;
+export default usersRoutes;

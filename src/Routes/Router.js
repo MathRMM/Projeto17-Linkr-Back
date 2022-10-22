@@ -1,8 +1,13 @@
 import express from "express";
-import searchUser from "./usersRoutes";
+
+import loginRoutes from './loginRoutes.js'
+import usersRoutes from './usersRoutes.js'
+import likesRoutes from "./likesRoutes.js";
 
 const router = express.Router();
 
-router.use(searchUser);
+router.use(loginRoutes);
+router.use(usersRoutes);
+router.use(likesRoutes);
 
 export default router;
