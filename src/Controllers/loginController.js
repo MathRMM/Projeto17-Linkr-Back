@@ -10,6 +10,7 @@ import {
     insertUser,
     upsertSessions,
     deleteSessionByUserId,
+    getUserProfile,
 } from "../Repositories/loginRepository.js";
 
 import * as response from "./Helpers/controllerHelpers.js";
@@ -25,8 +26,8 @@ export async function signUp(req, res) {
         if (user.length !== 0) {
             const message =
                 user[0].username === validation.value.username
-                    ? "Username not available"
-                    : "Invalid email";
+                    ? "Username not available."
+                    : "Email not available.";
             response.badRequestResponse(res, {
                 message,
             });
@@ -62,7 +63,7 @@ export async function signIn(req, res) {
         const userToken = jwt.sign(
             { userId: user[0].id },
             process.env.SECRET_TOKEN,
-            { expiresIn: "7d" }
+            { expiresIn: "10min" }
         );
         if (!userToken) {
             res.sendStatus(500);
@@ -71,6 +72,8 @@ export async function signIn(req, res) {
 
         await upsertSessions(user[0].id, userToken);
         response.okResponse(res, {
+            username: user[0].username,
+            image: user[0].picUrl,
             token: userToken,
         });
         return;
@@ -87,6 +90,21 @@ export async function test(req, res) {
         const token = req.headers.authorization;
         const retornoToken = jwt.verify(token, process.env.SECRET_TOKEN);
         res.status(200).send(retornoToken);
+    } catch (error) {
+        response.serverErrorResponse(res, error);
+        return;
+    }
+}
+
+export async function returnUserProfile(req, res) {
+    const { userId } = res.locals;
+
+    try {
+        response.okResponse(res, {
+            username: user[0].username,
+            image: user[0].picUrl,
+        });
+        return;
     } catch (error) {
         response.serverErrorResponse(res, error);
         return;

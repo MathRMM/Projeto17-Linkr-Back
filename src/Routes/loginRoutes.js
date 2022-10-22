@@ -19,13 +19,13 @@ loginRouter.post('/signin',
     loginController.signIn
 );
 
-loginRouter.use(authenticateToken)
+// loginRouter.get('/test-token', loginController.test)
+
+loginRouter.use(authenticateToken);
 
 // rota de logout
-loginRouter.get('/logout',
-    loginController.logOut
-);
+loginRouter.get('/logout', loginController.logOut);
 
-loginRouter.get('/test-token', loginController.test)
+loginRouter.get('/user-profile', loginController.returnUserProfile);
 
 export default loginRouter;

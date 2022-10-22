@@ -30,8 +30,11 @@ async function postLikeController(req, res){
     const userId = res.locals?.userId
 
     try {
-        const a = await DB_likes.delsertLikes(userId, postId)
-        return responseFunctions.createdResponse(res, {message: a.command})
+        const delsert = await DB_likes.delsertLikes(userId, postId)
+        if(delsert.command === 'INSERT'){
+            return responseFunctions.createdResponse(res, {message: ''})
+        }
+        
     } catch (error) {
         console.error(error)
         return responseFunctions.serverErrorResponse(res, error)
