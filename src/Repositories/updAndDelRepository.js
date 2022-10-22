@@ -12,6 +12,12 @@ async function getPostByIdPost(id){
         await connection.query(`SELECT * FROM posts WHERE id = $1;`, [id])
     )
 }
+async function updatePostByIdPost(postText, id){
+    return(
+        await connection.query(`UPDATE posts
+        SET "postText" = $1 WHERE id = $2;`, [postText,id])
+    )
+}
 
 async function deletePostByIdPost(id){
     return(
@@ -20,4 +26,4 @@ async function deletePostByIdPost(id){
 }
 
 
-export {getUserIdByToken, getPostByIdPost, deletePostByIdPost}
+export {getUserIdByToken, getPostByIdPost, updatePostByIdPost, deletePostByIdPost}
