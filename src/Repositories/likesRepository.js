@@ -26,6 +26,7 @@ async function getUserLike(userId, postId){
 
 async function delsertLikes(userId, postId){
     const result = await getUserLike(userId, postId)
+    console.log(postId)
 
     if(result[0]){
         return connection.query(`
