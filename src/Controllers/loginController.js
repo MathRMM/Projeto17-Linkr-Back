@@ -100,6 +100,7 @@ export async function returnUserProfile(req, res) {
     const { userId } = res.locals;
 
     try {
+        const user = await getUserProfile(userId);
         response.okResponse(res, {
             username: user[0].username,
             image: user[0].picUrl,
