@@ -8,15 +8,20 @@ async function getLikesController(req, res){
     try {
         const userLike = await DB_likes.getUserLike(userId, postId)
         const likesArray = await DB_likes.getLikes(postId)
+        if(!likesArray[0]) return responseFunctions.notFoundResponse(res)
         if(userLike[0]){
             const likesFilter = likesArray.filter(e => e.userId !== userLike[0].userId)
             return responseFunctions.okResponse(res, {
                 userLike: true,
+                countLikes: likesArray[0]?.countLikes,
+                postId:likesArray[0]?.postId,
                 likes : likesFilter
             })
         }
         return responseFunctions.okResponse(res, {
             userLike: false,
+            countLikes: likesArray[0]?.countLikes,
+            postId:likesArray[0]?.postId,
             likes : likesArray
         });
     } catch (error) {
@@ -32,9 +37,11 @@ async function postLikeController(req, res){
     try {
         const delsert = await DB_likes.delsertLikes(userId, postId)
         if(delsert.command === 'INSERT'){
-            return responseFunctions.createdResponse(res, {message: ''})
+            return responseFunctions.createdResponse(res, {message: 'LIKE'})
         }
-        
+        if(delsert.command === 'DELETE'){
+            return responseFunctions.createdResponse(res, {message: 'UNLIKE'})
+        }
     } catch (error) {
         console.error(error)
         return responseFunctions.serverErrorResponse(res, error)
