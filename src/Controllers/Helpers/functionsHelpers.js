@@ -17,4 +17,27 @@ function defineLimitsLikes(likesArray, userId){
     } else return []
 }
 
-export {defineLimitsLikes}
+async function getMetadata(postsArray) {
+    const metaPost = []
+    
+    for (const post of postsArray) {
+      const meta = await urlMetadata(post.postLink)
+      if (meta.title && meta.image && meta.description) {
+        metaPost.push({
+          ...post,
+          metaTitle: meta.title,
+          metaImage: meta.image,
+          metaDescription: meta.description
+        })
+      } else metaPost.push({
+        ...post
+      })
+    }
+  
+    return metaPost
+  }
+
+export {
+    defineLimitsLikes,
+    getMetadata
+}
