@@ -1,8 +1,9 @@
 import * as DB_likes from '../Repositories/likesRepository.js';
 import * as responseFunctions from './Helpers/controllerHelpers.js';
+import {defineLimitsLikes} from './Helpers/likesHelper.js'
 
 async function getLikesController(req, res){
-    const postId = req.params.id
+    const postId = req.params.posterId
     const userId = res.locals?.userId
     
     try {
@@ -15,14 +16,14 @@ async function getLikesController(req, res){
                 userLike: true,
                 countLikes: likesArray[0]?.countLikes,
                 postId:likesArray[0]?.postId,
-                likes : likesFilter
+                likes : defineLimitsLikes(likesFilter)
             })
         }
         return responseFunctions.okResponse(res, {
             userLike: false,
             countLikes: likesArray[0]?.countLikes,
             postId:likesArray[0]?.postId,
-            likes : likesArray
+            likes : defineLimitsLikes(likesArray)
         });
     } catch (error) {
         console.error(500)

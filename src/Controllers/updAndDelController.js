@@ -32,7 +32,7 @@ async function deletePost(req, res) {
         const post = await getPostByIdPost(id)
         if (!post.rows[0]) return responseFunctions.notFoundResponse(res);
         
-        if(post.rows[0].idUser !==idUser.rows[0].idUser) return responseFunctions.unauthorized(res);
+        if(post.rows[0].idUser !== idUser.rows[0].idUser) return responseFunctions.unauthorized(res);
         await deletePostByIdPost(id)
         
         return responseFunctions.noContentResponse(res);
