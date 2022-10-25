@@ -1,3 +1,5 @@
+import urlMetadata from 'url-metadata';
+
 function defineLimitsLikes(likesArray, userId){
     const newArray = []
     if(likesArray.length >= 2){
