@@ -19,7 +19,7 @@ loginRouter.post('/signin',
     loginController.signIn
 );
 
-// loginRouter.get('/test-token', loginController.test)
+loginRouter.get('/test-token', loginController.test)
 
 loginRouter.use(authenticateToken);
 
