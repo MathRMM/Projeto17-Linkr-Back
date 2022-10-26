@@ -15,15 +15,15 @@ async function newPost(id, postText, link) {
 async function listPost() {
   return (await connection.query(`
   SELECT 
-    users.id, 
+    users.id AS "userId", 
     users.username, 
-    users."picUrl" AS profile,
-    posts.id AS postId, 
+    users."picUrl",
+    posts.id AS "postId", 
     posts."postText",
     posts.link AS "postLink"
   FROM users 
   JOIN posts ON users.id = posts."idUser"  
-  ORDER BY postId DESC
+  ORDER BY "postId" DESC
   LIMIT 20;`
   )).rows;
 }

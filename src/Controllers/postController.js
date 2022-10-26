@@ -1,15 +1,16 @@
-import urlMetadata from "url-metadata";
-
 import { postRepository } from "../Repositories/postRepository.js";
 import * as responseFunction from "./Helpers/controllerHelpers.js"
+import { getMetadata } from './Helpers/functionsHelpers.js'
 
 export async function createPost(req, res) {
   const { url, comment } = req.body;
 
   const userId = res.locals.userId;
 
+  console.log(await urlMetadata(url))
+
   try {
-    await postRepository.newPost(userId, comment, url);
+    //await postRepository.newPost(userId, comment, url);
     return responseFunction.createdResponse(res);
   } catch (error) {
     return responseFunction.serverErrorResponse(res, error);
@@ -17,12 +18,15 @@ export async function createPost(req, res) {
 }
 
 export async function getPosts(req, res) {
+  const { page } = req.query
   try {
 
     const posts = await postRepository.listPost();
-   
-    return responseFunction.okResponse(res, posts);
+    const metaPost = await getMetadata(posts)
+
+    return responseFunction.okResponse(res, metaPost);
   } catch (error) {
     return responseFunction.serverErrorResponse(res, error);
   }
 }
+

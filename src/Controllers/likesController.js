@@ -1,29 +1,29 @@
 import * as DB_likes from '../Repositories/likesRepository.js';
 import * as responseFunctions from './Helpers/controllerHelpers.js';
-import {defineLimitsLikes} from './Helpers/likesHelper.js'
+import { defineLimitsLikes } from './Helpers/functionsHelpers.js'
 
-async function getLikesController(req, res){
+async function getLikesController(req, res) {
     const postId = req.params.posterId
     const userId = res.locals?.userId
-    
+
     try {
         const userLike = await DB_likes.getUserLike(userId, postId)
         const likesArray = await DB_likes.getLikes(postId)
-        if(!likesArray[0]) return responseFunctions.notFoundResponse(res)
-        if(userLike[0]){
+        if (!likesArray[0]) return responseFunctions.notFoundResponse(res)
+        if (userLike[0]) {
             const likesFilter = likesArray.filter(e => e.userId !== userLike[0].userId)
             return responseFunctions.okResponse(res, {
                 userLike: true,
                 countLikes: likesArray[0]?.countLikes,
-                postId:likesArray[0]?.postId,
-                likes : defineLimitsLikes(likesFilter)
+                postId: likesArray[0]?.postId,
+                likes: defineLimitsLikes(likesFilter)
             })
         }
         return responseFunctions.okResponse(res, {
             userLike: false,
             countLikes: likesArray[0]?.countLikes,
-            postId:likesArray[0]?.postId,
-            likes : defineLimitsLikes(likesArray)
+            postId: likesArray[0]?.postId,
+            likes: defineLimitsLikes(likesArray)
         });
     } catch (error) {
         console.error(500)
@@ -31,17 +31,17 @@ async function getLikesController(req, res){
     }
 }
 
-async function postLikeController(req, res){
+async function postLikeController(req, res) {
     const { postId } = req.body
     const userId = res.locals?.userId
 
     try {
         const delsert = await DB_likes.delsertLikes(userId, postId)
-        if(delsert.command === 'INSERT'){
-            return responseFunctions.createdResponse(res, {message: 'LIKE'})
+        if (delsert.command === 'INSERT') {
+            return responseFunctions.createdResponse(res, { message: 'LIKE' })
         }
-        if(delsert.command === 'DELETE'){
-            return responseFunctions.createdResponse(res, {message: 'UNLIKE'})
+        if (delsert.command === 'DELETE') {
+            return responseFunctions.createdResponse(res, { message: 'UNLIKE' })
         }
     } catch (error) {
         console.error(error)
