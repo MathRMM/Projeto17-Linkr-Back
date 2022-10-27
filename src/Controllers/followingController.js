@@ -5,7 +5,7 @@ async function followingUser(req, res) {
     const id = req.params.id;
     try {
         const comments = await getFollowingsByidUser(id);
-        console.log(comments)
+        
         return responseFunctions.okResponse(res, comments.rows);
     } catch (error) {
         return responseFunctions.serverErrorResponse(res, error)
