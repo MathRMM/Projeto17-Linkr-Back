@@ -19,7 +19,7 @@ async function commentsPost(req, res) {
     const id = req.params.id;
     try {
         const comments = await getCommentsPostByidPost(id);
-        
+        console.log(comments)
         return responseFunctions.okResponse(res, comments.rows);
     } catch (error) {
         return responseFunctions.serverErrorResponse(res, error)
@@ -50,5 +50,7 @@ async function newCommentOnPost(req, res) {
         return responseFunctions.serverErrorResponse(res, error)
     }
 }
+
+
 
 export { countCommentsPost, commentsPost, newCommentOnPost }
