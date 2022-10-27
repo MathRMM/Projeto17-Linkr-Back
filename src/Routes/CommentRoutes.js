@@ -1,12 +1,13 @@
 import { Router } from "express";
 
-import { commentsPost } from "../Controllers/commentsController.js";
+import { countCommentsPost, commentsPost, newCommentOnPost } from "../Controllers/commentsController.js";
 
 const comments = Router();
  
 
-comments.get('/comment', commentsPost);
-/* comments.get('/comment/:id', updatePost); */
+comments.get('/comment', countCommentsPost);
+comments.get('/comment/:id', commentsPost);
+comments.post('/comment/:id', newCommentOnPost); 
 
 
 export default comments;
