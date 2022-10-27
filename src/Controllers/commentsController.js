@@ -2,7 +2,6 @@ import { getCountComment, getCommentsPostByidPost, newCommentPostByidPost } from
 import { getUserIdByToken, getPostByIdPost } from '../Repositories/updAndDelRepository.js';
 import * as responseFunctions from './Helpers/controllerHelpers.js'
 
-
 async function countCommentsPost(req, res) {
     
     try {
