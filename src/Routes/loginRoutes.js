@@ -26,7 +26,7 @@ loginRouter.post(
 
 // loginRouter.get('/test-token', loginController.test)
 
-loginRouter.use(authenticateToken);
+/* loginRouter.use(authenticateToken); */
 
 // rota de logout
 loginRouter.get("/logout", loginController.logOut);
