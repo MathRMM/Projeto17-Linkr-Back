@@ -1,18 +1,22 @@
 import { connection } from "../DB/db.js";
 
-async function newPost(id, postText, link) {
+async function newPost(id, postText, link, title, image, description) {
   return connection.query(`
-    INSERT INTO posts ("idUser", "postText",link )
-    VALUES($1, $2, $3)`,
+    INSERT INTO posts ("idUser", "postText",link, title, image, description )
+    VALUES($1, $2, $3, $4, $5, $6);`,
     [
       id,
       postText,
-      link
+      link,
+      title, 
+      image, 
+      description
     ]
   );
 }
 
-async function listPost() {
+async function listPost(num) {
+  const page = (num * 10) - 10
   return (await connection.query(`
   SELECT 
     users.id AS "userId", 
@@ -20,12 +24,16 @@ async function listPost() {
     users."picUrl",
     posts.id AS "postId", 
     posts."postText",
-    posts.link AS "postLink"
+    posts.link AS "postLink",
+    posts.title AS "metaTitle",
+    posts.image AS "metaImage",
+    posts.description AS "metaDescription"
   FROM users 
   JOIN posts ON users.id = posts."idUser"  
   ORDER BY "postId" DESC
-  LIMIT 20;`
-  )).rows;
+  OFFSET $1
+  LIMIT 10;`
+  , [page])).rows;
 }
 
 export const postRepository = {

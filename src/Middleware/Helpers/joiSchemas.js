@@ -14,7 +14,7 @@ const loginSchema = joi.object({
 
 const newPostSchema = joi.object({
     url: joi.string().uri().required(),
-    comment: joi.string(),
+    comment: joi.string().empty(''),
   });
 
 

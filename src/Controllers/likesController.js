@@ -26,7 +26,6 @@ async function getLikesController(req, res) {
             likes: defineLimitsLikes(likesArray)
         });
     } catch (error) {
-        console.error(500)
         return responseFunctions.serverErrorResponse(res, error)
     }
 }
