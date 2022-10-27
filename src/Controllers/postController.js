@@ -1,21 +1,32 @@
-import { postRepository } from "../repository/postRepository.js";
+import { postRepository } from "../Repositories/postRepository.js";
+import * as responseFunction from "./Helpers/controllerHelpers.js"
+import { getMetadata } from './Helpers/functionsHelpers.js'
 
-export async function post(req, res) {
+export async function createPost(req, res) {
   const { url, comment } = req.body;
 
-  const { id } = res.locals;
+  const userId = res.locals.userId;
+
+  console.log(await urlMetadata(url))
 
   try {
-    if (comment === undefined) {
-      comment = "";
-    }
-    const metaDados = await urlMetadata(url);
-
-    await postRepository.newPost(id, comment, url, metaDados);
-
-    res.sendStatus("200");
-  } catch (err) {
-    console.log(err);
-    res.sendStatus(500);
+    //await postRepository.newPost(userId, comment, url);
+    return responseFunction.createdResponse(res);
+  } catch (error) {
+    return responseFunction.serverErrorResponse(res, error);
   }
 }
+
+export async function getPosts(req, res) {
+  const { page } = req.query
+  try {
+
+    const posts = await postRepository.listPost();
+    const metaPost = await getMetadata(posts)
+
+    return responseFunction.okResponse(res, metaPost);
+  } catch (error) {
+    return responseFunction.serverErrorResponse(res, error);
+  }
+}
+

@@ -4,7 +4,7 @@ import { getLikesController, postLikeController } from '../Controllers/likesCont
 
 const likesRoutes = Router();
 
-likesRoutes.get('/likes/:id', getLikesController)
+likesRoutes.get('/likes/:posterId', getLikesController)
 likesRoutes.post('/likes', postLikeController)
 
 export default likesRoutes;

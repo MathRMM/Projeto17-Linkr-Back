@@ -12,5 +12,10 @@ const loginSchema = joi.object({
     password: joi.string().required().trim(),
 });
 
+const newPostSchema = joi.object({
+    url: joi.string().uri().required(),
+    comment: joi.string(),
+  });
 
-export { accountSchema, loginSchema };
+
+export { accountSchema, loginSchema, newPostSchema };

@@ -12,6 +12,7 @@ async function getPostByIdPost(id){
         await connection.query(`SELECT * FROM posts WHERE id = $1;`, [id])
     )
 }
+
 async function updatePostByIdPost(postText, id){
     return(
         await connection.query(`UPDATE posts
