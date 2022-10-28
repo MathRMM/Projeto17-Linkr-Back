@@ -3,9 +3,10 @@ import { getUserIdByToken, getPostByIdPost } from '../Repositories/updAndDelRepo
 import * as responseFunctions from './Helpers/controllerHelpers.js'
 
 async function countCommentsPost(req, res) {
+    const id = req.params.id
     
     try {
-        const countComments = await getCountComment();
+        const countComments = await getCountComment(id);
         
         return responseFunctions.okResponse(res, countComments.rows);
     } catch (error) {
@@ -30,6 +31,7 @@ async function newCommentOnPost(req, res) {
     const token = req.headers.authorization?.replace('Bearer ', '');
     const id = req.params.id;
     const {commentary} = req.body;
+
     try {
         const idUser = await getUserIdByToken(token);
         if(!idUser.rows[0].idUser) return responseFunctions.unauthorized(res);
