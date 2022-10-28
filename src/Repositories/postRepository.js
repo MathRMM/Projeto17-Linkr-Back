@@ -38,7 +38,16 @@ async function listPost(userId, num) {
     [userId, page])).rows;
 }
 
+async function updatePosts() {
+  return (await connection.query(`
+  SELECT
+    COUNT(posts)
+  FROM posts;
+  `)).rows;
+}
+
 export const postRepository = {
   listPost,
   newPost,
+  updatePosts
 };
