@@ -23,7 +23,7 @@ async function getUserById(id, num) {
     `, [id, page])).rows
 }
 
-async function searchUsername(idUser, username) {
+/* async function searchUsername(idUser, username) {
     return (await connection.query(`
     SELECT * FROM (
         SELECT DISTINCT ON ("following"."idUserFollowing")
@@ -41,6 +41,17 @@ async function searchUsername(idUser, username) {
     ) as t
     ORDER BY "followedByUser" DESC;
     `, [idUser, username + '%'])).rows
+} */
+
+async function searchUsername(username){
+    return (await connection.query(`
+    SELECT 
+        users.id,
+        users.username,
+        users."picUrl"
+    FROM users
+    WHERE users.username ILIKE $1;
+    `, [username + '%'])).rows
 }
 
 export {
