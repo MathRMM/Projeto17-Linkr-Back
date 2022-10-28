@@ -1,6 +1,6 @@
 import { connection } from "../DB/db.js";
 
-async function getUserById(id, num){
+async function getUserById(id, num) {
     const page = (num * 10) - 10
     return (await connection.query(`
     SELECT 
@@ -23,15 +23,24 @@ async function getUserById(id, num){
     `, [id, page])).rows
 }
 
-async function searchUsername(username){
+async function searchUsername(idUser, username) {
     return (await connection.query(`
-    SELECT 
-        users.id,
-        users.username,
-        users."picUrl"
-    FROM users
-    WHERE users.username ILIKE $1;
-    `, [username + '%'])).rows
+    SELECT * FROM (
+        SELECT DISTINCT ON ("following"."idUserFollowing")
+            users.id,
+            users.username,
+            users."picUrl",
+            (
+                CASE WHEN "following"."idUser" = $1 THEN 'true'
+                    ELSE 'false'
+                END
+            ) as "followedByUser"
+        FROM users
+            JOIN public."following" ON users.id = "following"."idUserFollowing"
+        WHERE users.username ILIKE $2
+    ) as t
+    ORDER BY "followedByUser" DESC;
+    `, [idUser, username + '%'])).rows
 }
 
 export {

@@ -1,6 +1,6 @@
 import { connection } from "../DB/db.js";
 
-async function getLikes (postId){
+async function getLikes(postId) {
     return (await connection.query(`
     SELECT 
         posts.id AS "postId",
@@ -14,7 +14,7 @@ async function getLikes (postId){
     `, [postId])).rows
 }
 
-async function getUserLike(userId, postId){
+async function getUserLike(userId, postId) {
     return (await connection.query(`
     SELECT 
         "idUser" AS "userId",
@@ -24,14 +24,14 @@ async function getUserLike(userId, postId){
     `, [userId, postId])).rows
 }
 
-async function delsertLikes(userId, postId){
+async function delsertLikes(userId, postId) {
     const result = await getUserLike(userId, postId)
 
-    if(result[0]){
+    if (result[0]) {
         return connection.query(`
         DELETE FROM likes WHERE "idUser" = $1 AND "idPostLiked" = $2;
         `, [userId, postId])
-    }else {
+    } else {
         return connection.query(`
         INSERT INTO likes ("idUser", "idPostLiked")
         VALUES ($1, $2);

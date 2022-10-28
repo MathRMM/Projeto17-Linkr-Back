@@ -11,7 +11,7 @@ const { Pool } = pg;
     }
 } */
 
-const dataConfig={
+const dataConfig = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
@@ -21,4 +21,4 @@ const dataConfig={
 
 const connection = new Pool(dataConfig);
 
-export {connection};
+export { connection };

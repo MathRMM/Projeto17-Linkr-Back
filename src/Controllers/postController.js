@@ -37,11 +37,12 @@ export async function creatPost(req, res) {
 }
 
 export async function getPosts(req, res) {
-  let { page } = req.query;
-  if (!page || page == 0) page = 1;
+  const { userId } = res.locals;
+  let { page } = req.query
+  if (!page || page == 0) page = 1
 
   try {
-    const posts = await postRepository.listPost(page);
+    const posts = await postRepository.listPost(userId, page);
 
     return responseFunction.okResponse(res, posts);
   } catch (error) {

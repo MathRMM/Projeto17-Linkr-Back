@@ -7,6 +7,7 @@ import updAndDel from "./updateAndDeleteRotes.js";
 import postRouter from "./postRouter.js";
 import comments from "./CommentRoutes.js";
 import following from "./followingRoute.js";
+import followRoutes from "./followRoutes.js";
 import tagRouter from "./tagRouter.js";
 import repostsRouter from "./repostRouter.js";
 
@@ -19,6 +20,7 @@ router.use(updAndDel);
 router.use(postRouter);
 router.use(comments);
 router.use(following);
+router.use(followRoutes);
 router.use(tagRouter);
 router.use(repostsRouter);
 
