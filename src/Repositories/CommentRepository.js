@@ -1,8 +1,8 @@
 import { connection } from "../DB/db.js";
 
-async function getCountComment(){
+async function getCountComment(id){
     return(
-        await connection.query(`SELECT "idPost", COUNT (commentary) AS comments FROM commentaries GROUP BY "idPost";`)
+        await connection.query(`SELECT COUNT (commentary) AS comments FROM commentaries WHERE "idPost" = $1;`, [id])
     )
 }
 

@@ -5,8 +5,8 @@ import { countCommentsPost, commentsPost, newCommentOnPost } from "../Controller
 const comments = Router();
  
 
-comments.get('/comment', countCommentsPost);
-comments.get('/comment/:id', commentsPost);
+comments.get('/comment/:id', countCommentsPost);
+comments.get('/comments/:id', commentsPost);
 comments.post('/comment/:id', newCommentOnPost); 
 
 
