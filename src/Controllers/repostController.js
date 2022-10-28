@@ -1,4 +1,4 @@
-import connection from "../DB/db";
+import { connection } from "../DB/db.js";
 
 export async function creatRepost(req, res) {
   try {

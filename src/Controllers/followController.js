@@ -1,4 +1,4 @@
-import { getAllFollowing, getFollowing, insertFollowing, deleteFollowing } from "../repositories/followRepository.js";
+import { getAllFollowing, getFollowing, insertFollowing, deleteFollowing } from "../Repositories/followRepository.js";
 
 import * as response from "./Helpers/controllerHelpers.js";
 
