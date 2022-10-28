@@ -27,3 +27,11 @@ export async function getPosts(req, res) {
   }
 }
 
+export async function updatePostsController(req, res){
+  try {
+    const count = await postRepository.updatePosts();
+    return responseFunction.okResponse(res, count[0]);
+  } catch (error) {
+    return responseFunction.serverErrorResponse(res, error);
+  }
+}
