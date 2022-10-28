@@ -4,5 +4,5 @@ import { authenticateToken } from "../Middleware/authenticationMiddleware";
 
 const repostsRouter = express.router();
 
-repostsRouter.post("/repost", authenticateToken, creatRepost);
+repostsRouter.post("/repost", creatRepost);
 export default repostsRouter;

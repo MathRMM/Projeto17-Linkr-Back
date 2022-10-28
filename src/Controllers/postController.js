@@ -3,15 +3,13 @@ import * as responseFunction from "./Helpers/controllerHelpers.js";
 import * as TagRepository from "../Repositories/TagRepository.js";
 import urlMetadata from "url-metadata";
 
-export async function creatPost(req, res) {
+export async function createPost(req, res) {
   const { url, comment } = req.body;
-
-  const id = res.locals.userId;
-
+  const userId = res.locals.userId;
+  
   try {
-    const metaDados = await urlMetadata(url);
-
-    await postRepository.newPost(id, comment, url, metaDados);
+    const {title, image, description} = await urlMetadata(url);
+    await postRepository.newPost(userId, comment, url, title, image, description);
 
     const { rows: postId } = await TagRepository.getLastPost();
     const hashtag = req.body.comment.split("#");
@@ -29,10 +27,9 @@ export async function creatPost(req, res) {
       await TagRepository.insertPostTags(idPost, idTag[0].id);
     }
 
-    res.sendStatus(200);
-  } catch (err) {
-    console.log(err);
-    res.sendStatus(500);
+    return responseFunction.createdResponse(res);
+  } catch (error) {
+    return responseFunction.serverErrorResponse(res, error);
   }
 }
 
