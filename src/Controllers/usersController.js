@@ -10,7 +10,6 @@ async function getUserByIdController(req, res){
     try {
         const user = await getUserById(id, page)
         if(!user[0]) return responseFunctions.notFoundResponse(res)
-        console.log(user[0])
         const objUser = {
             userId: user[0].userId,
             username: user[0].username,

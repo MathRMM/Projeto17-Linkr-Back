@@ -8,8 +8,8 @@ async function newPost(id, postText, link, title, image, description) {
       id,
       postText,
       link,
-      title, 
-      image, 
+      title,
+      image,
       description
     ]
   );
@@ -33,10 +33,19 @@ async function listPost(num) {
   ORDER BY "postId" DESC
   OFFSET $1
   LIMIT 10;`
-  , [page])).rows;
+    , [page])).rows;
+}
+
+async function updatePosts() {
+  return (await connection.query(`
+  SELECT
+    COUNT(posts)
+  FROM posts;
+  `)).rows;
 }
 
 export const postRepository = {
   listPost,
   newPost,
+  updatePosts
 };

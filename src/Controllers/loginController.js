@@ -71,7 +71,6 @@ export async function signIn(req, res) {
         }
 
         await upsertSessions(user[0].id, userToken);
-        console.log(user)
         response.okResponse(res, {
             id: user[0].id,
             username: user[0].username,
@@ -104,6 +103,7 @@ export async function returnUserProfile(req, res) {
     try {
         const user = await getUserProfile(userId);
         response.okResponse(res, {
+            id: user[0].id,
             username: user[0].username,
             image: user[0].picUrl,
         });
