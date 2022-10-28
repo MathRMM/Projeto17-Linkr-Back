@@ -1,6 +1,5 @@
 import { postRepository } from "../Repositories/postRepository.js";
 import * as responseFunction from "./Helpers/controllerHelpers.js"
-import { getMetadata } from './Helpers/functionsHelpers.js'
 import urlMetadata from "url-metadata";
 
 export async function createPost(req, res) {
