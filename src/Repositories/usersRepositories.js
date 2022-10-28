@@ -1,4 +1,4 @@
-import connection from "../DB/db.js";
+import { connection } from "../DB/db.js";
 
 async function getUserById(id, num) {
     const page = (num * 10) - 10

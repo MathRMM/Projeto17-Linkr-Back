@@ -1,4 +1,4 @@
-import connection from "../DB/db.js";
+import { connection } from "../DB/db.js";
 
 export async function getAllFollowing(idUser) {
     return connection.query(

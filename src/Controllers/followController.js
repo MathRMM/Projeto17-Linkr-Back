@@ -21,6 +21,7 @@ export async function returnIsFollowing(req, res) {
     const id = parseInt(req.params.id);
     const { userId } = res.locals;
 
+
     try {
         const { rows: following } = await getFollowing(userId, id);
 
@@ -41,6 +42,7 @@ export async function returnIsFollowing(req, res) {
 export async function addFollow(req, res) {
     const id = parseInt(req.params.id);
     const { userId } = res.locals;
+
     if (id === userId) {
         response.badRequestResponse(res, { message: "User cannot follow it's own account" })
         return;

@@ -1,4 +1,4 @@
-import connection from "../DB/db.js";
+import { connection } from "../DB/db.js";
 
 async function getLikes(postId) {
     return (await connection.query(`
