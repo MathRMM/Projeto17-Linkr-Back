@@ -3,10 +3,14 @@ import * as responseFunctions from './Helpers/controllerHelpers.js'
 
 async function getUserByIdController(req, res) {
     const { id } = req.params
+    if (!id || !Number(id)) return responseFunctions.badRequestResponse(res)
+    let { page } = req.query
+    if (!page || page == 0) page = 1
 
     try {
-        const user = await getUserById(id)
+        const user = await getUserById(id, page)
         if (!user[0]) return responseFunctions.notFoundResponse(res)
+        console.log(user[0])
         const objUser = {
             userId: user[0].userId,
             username: user[0].username,
@@ -15,7 +19,10 @@ async function getUserByIdController(req, res) {
                 return {
                     postId: e.postId,
                     postLink: e.postLink,
-                    postText: e.postText
+                    postText: e.postText,
+                    metaTitle: e.metaTitle,
+                    metaImage: e.metaImage,
+                    metaDescription: e.metaDescription
                 }
             })
         }

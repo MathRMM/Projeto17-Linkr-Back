@@ -1,6 +1,7 @@
 import connection from "../DB/db.js";
 
-async function getUserById(id) {
+async function getUserById(id, num) {
+    const page = (num * 10) - 10
     return (await connection.query(`
     SELECT 
         users.id AS "userId",
@@ -9,11 +10,17 @@ async function getUserById(id) {
         users."picUrl" AS "userPicUrl",
         posts.id AS "postId",
         posts.link AS "postLink",
-        posts."postText"
+        posts."postText",
+        posts.title AS "metaTitle",
+        posts.image AS "metaImage",
+        posts.description AS "metaDescription"
     FROM users
     JOIN posts ON posts."idUser" = users.id
-    WHERE posts."idUser" = $1;
-    `, [id])).rows
+    WHERE posts."idUser" = $1
+    ORDER BY "postId" DESC
+    OFFSET $2
+    LIMIT 10;
+    `, [id, page])).rows
 }
 
 async function searchUsername(idUser, username) {
