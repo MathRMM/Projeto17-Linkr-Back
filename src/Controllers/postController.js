@@ -37,7 +37,7 @@ export async function getPosts(req, res) {
   const { userId } = res.locals;
   let { page } = req.query
   if (!page || page == 0) page = 1
-
+  
   try {
     const posts = await postRepository.listPost(userId, page);
 
