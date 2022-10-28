@@ -35,8 +35,7 @@ async function searchUsernameController(req, res) {
     const { username } = req.params;
 
     try {
-        const users = await searchUsername(userId, username);
-        console.log(users);
+        const users = await searchUsername(username, userId);
         if (!users[0]) return responseFunctions.notFoundResponse(res)
         return responseFunctions.okResponse(res, users);
     } catch (error) {
