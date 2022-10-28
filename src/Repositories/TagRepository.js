@@ -37,11 +37,21 @@ export function insertPostTags(idPost, idTag) {
 
 export async function getTagPosts(id) {
   return connection.query(
-    `SELECT posts.*, users.username AS username, users.email, users."picUrl" AS profile, tags.name AS hashtag
-        FROM posts JOIN users ON posts."idUser" = users.id 
-        JOIN "postTags" ON posts.id="postTags"."idPost" 
-        JOIN tags ON "postTags"."idTag"=tags.id
-        WHERE "postTags"."idTag" = $1`,
+    `SELECT 
+    posts.id AS "postId",
+    posts."postText",
+    posts.link AS "postLink",
+    posts.title AS "metaTitle",
+    posts.image AS "metaImage",
+    posts.description AS "metaDescription",
+    users.username AS username, 
+    users.email,
+    users."picUrl" AS "picUrl",
+    tags.name AS hashtag
+    FROM posts JOIN users ON posts."idUser" = users.id 
+    JOIN "postTags" ON posts.id="postTags"."idPost" 
+    JOIN tags ON "postTags"."idTag"=tags.id
+    WHERE "postTags"."idTag" = $1`,
     [id]
   );
 }
