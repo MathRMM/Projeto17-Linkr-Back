@@ -38,7 +38,7 @@ async function newPost(id, postText, link, title, image, description) {
     [userId, page])).rows;
 } */
 
-async function listPost(x, num) {
+async function listPost(num) {
   const page = (num * 10) - 10
   return (await connection.query(`
   SELECT 
