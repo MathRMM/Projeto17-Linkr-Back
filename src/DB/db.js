@@ -1,5 +1,3 @@
-
-
 import pg from 'pg';
 import dotenv from 'dotenv'
 dotenv.config()
@@ -16,4 +14,4 @@ const databaseConfig = {
 
 const connection = new Pool(databaseConfig);
 
-export default connection;
+export {connection};
