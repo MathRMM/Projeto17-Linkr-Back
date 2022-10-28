@@ -13,7 +13,7 @@ followRouter.use(authenticateToken);
 // rota de logout
 followRouter.get('/following', followController.returnFollowing);
 
-following.get('/followers/:id', followController.followingUser);
+followRouter.get('/followers/:id', followController.followingUser);
 
 followRouter.get('/following/:id', followController.returnIsFollowing);
 
