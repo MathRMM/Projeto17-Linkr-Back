@@ -52,31 +52,6 @@ async function listPost(num) {
   LIMIT 10;`
     , [page])).rows;
 }
- */
-async function listPost(x, num) {
-  const page = num * 10 - 10;
-  return (
-    await connection.query(
-      `
-  SELECT
-    users.id AS "userId",
-    users.username,
-    users."picUrl",
-    posts.id AS "postId",
-    posts."postText",
-    posts.link AS "postLink",
-    posts.title AS "metaTitle",
-    posts.image AS "metaImage",
-    posts.description AS "metaDescription"
-  FROM users
-  JOIN posts ON users.id = posts."idUser"
-  ORDER BY "postId" DESC
-  OFFSET $1
-  LIMIT 10;`,
-      [page]
-    )
-  ).rows;
-}
 
 async function updatePosts() {
   return (
