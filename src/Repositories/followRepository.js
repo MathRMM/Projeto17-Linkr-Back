@@ -1,4 +1,4 @@
-/* import { connection } from "../DB/db.js";
+import { connection } from "../DB/db.js";
 
 export async function getAllFollowing(idUser) {
     return connection.query(
@@ -70,4 +70,10 @@ export async function deleteFollowing(idUser, idFollowing) {
             idFollowing
         ]
     );
-} */
+}
+
+export async function getFollowingsByidUser(id) {
+    return (
+        await connection.query(`SELECT * FROM following WHERE "idUser" = $1;`, [id])
+    )
+}

@@ -1,4 +1,4 @@
-/* import express from "express";
+import express from "express";
 
 import * as followController from "../Controllers/followController.js";
 
@@ -13,11 +13,12 @@ followRouter.use(authenticateToken);
 // rota de logout
 followRouter.get("/following", followController.returnFollowing);
 
-followRouter.get("/following/:id", followController.returnIsFollowing);
+followRouter.get('/followers/:id', followController.followingUser);
+
+followRouter.get('/following/:id', followController.returnIsFollowing);
 
 followRouter.get("/follow/:id", followController.addFollow);
 
 followRouter.get("/unfollow/:id", followController.removeFollow);
 
 export default followRouter;
- */

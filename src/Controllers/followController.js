@@ -1,9 +1,5 @@
-/* import {
-  getAllFollowing,
-  getFollowing,
-  insertFollowing,
-  deleteFollowing,
-} from "../Repositories/followRepository.js";
+import { getAllFollowing, getFollowing, insertFollowing, deleteFollowing, getFollowingsByidUser } from "../Repositories/followRepository.js";
+
 
 import * as response from "./Helpers/controllerHelpers.js";
 
@@ -93,4 +89,14 @@ export async function removeFollow(req, res) {
     return;
   }
 }
- */
+
+export async function followingUser(req, res) {
+    const id = req.params.id;
+    try {
+        const comments = await getFollowingsByidUser(id);
+
+        return response.okResponse(res, comments.rows);
+    } catch (error) {
+        return response.serverErrorResponse(res, error)
+    }
+}

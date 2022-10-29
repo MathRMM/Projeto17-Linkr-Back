@@ -1,4 +1,4 @@
-/* import { connection } from "../DB/db.js";
+import { connection } from "../DB/db.js";
 
 async function getFollowingsByidUser(id) {
   return await connection.query(
@@ -8,4 +8,3 @@ async function getFollowingsByidUser(id) {
 }
 
 export { getFollowingsByidUser };
- */

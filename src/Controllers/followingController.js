@@ -1,4 +1,4 @@
-/* import { getFollowingsByidUser } from '../Repositories/followingRepository.js';
+import { getFollowingsByidUser } from '../Repositories/followingRepository.js';
 import * as responseFunctions from './Helpers/controllerHelpers.js'
 
 async function followingUser(req, res) {
@@ -12,4 +12,4 @@ async function followingUser(req, res) {
     }
 }
 
-export { followingUser} */
+export { followingUser}
